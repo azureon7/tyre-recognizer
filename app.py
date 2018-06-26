@@ -23,9 +23,9 @@ def upload_file():
     npimg = np.fromstring(filestr, np.uint8)
     # convert numpy array to image
     img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
-    step3 = cif_step1(img)
-    #step2 = cif_step2(step1)
-    #step3 = cif_step3(step2)
+    step1 = cif_step1(img)
+    step2 = cif_step2(step1)
+    step3 = cif_step3(step2)
     
     filename='foto.jpg'
     f = os.path.join(app.config['UPLOAD_FOLDER'], filename)
