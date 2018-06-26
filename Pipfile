@@ -3,6 +3,8 @@ gunicorn = "*"
 flask = "*"
 requests = "*"
 opencv-python = "*"
+opencv-contrib-python = "*"
+numpy = "*"
 
 [requires]
 python_version = "2.7"
