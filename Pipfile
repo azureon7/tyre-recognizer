@@ -5,6 +5,7 @@ requests = "*"
 opencv-python = "*"
 opencv-contrib-python = "*"
 numpy = "*"
+pandas = "*"
 
 [requires]
 python_version = "2.7"
