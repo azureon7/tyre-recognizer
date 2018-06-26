@@ -2,6 +2,7 @@
 gunicorn = "*"
 flask = "*"
 requests = "*"
+cv2 = "*"
 
 [requires]
 python_version = "2.7"
