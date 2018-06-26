@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tyre Detection</title>
+  
+</head>
+
+<body align="center" style="font-size:13pt !important">
+<header class="navbar">
+  <form action="/upload" method="post" enctype="multipart/form-data" style="font-size:13pt !important">
+      <span class="btn btn-default btn-file" style="font-size:13pt !important">
+        Choose image: <input type="file" name="image">
+      </span>
+
+    <input type="submit" value="Analyze !" class="btn btn-primary" style="font-size:13pt !important">
+  </form>
+  
+ <div class="text-center">
+    {% if init %}
+        <br>
+        <div style="overflow-x:scroll; white-space: nowrap" class="col-md-12" width="900">
+        <img src="{{ url_for('send_file', filename=filename) }}">
+        </div>
+        <form action="/retry" method="get"> <!-- or method="post" -->
+        <br><div>
+        <input type="submit" value="Retry !" style="font-size:13pt !important">
+        </div>
+    </form>
+    {% endif %}
+</div> 
+ 
+</header>
+
+</body>
+</html>
