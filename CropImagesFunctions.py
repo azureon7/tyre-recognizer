@@ -9,12 +9,13 @@ from collections import defaultdict, Counter
 def cif_step1(img):
     img_small = cv2.resize(img, (0, 0), fx=0.25, fy=0.25)
     img_big = cv2.resize(img, (0, 0), fx=3, fy=3)
+    del img
     gray = cv2.cvtColor(img_small, cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(gray, 20, 30)
+    edges = cv2.Canny(gray, 10, 10)
     h = img_small.shape[0]
     # identifico circonferenze
     circles = cv2.HoughCircles(edges, method=cv2.HOUGH_GRADIENT, dp=1, minDist=1, circles=None,
-                               minRadius=int(h / 4), maxRadius=int(h / 2.2), param1=100, param2=170)
+                               minRadius=int(h / 4), maxRadius=int(h / 2.2), param1=100, param2=175)
     circles = np.int0(np.array(circles))
     circles_df = pd.DataFrame(circles[0], columns=['X', 'Y', 'R'])
     X = int(circles_df.X.mean())  # centro medio, coordinata X
@@ -30,7 +31,6 @@ def cif_step1(img):
     img_polar = cv2.logPolar(img_crop, (R1, R1), 72.5 * 3 / 0.25, cv2.WARP_FILL_OUTLIERS)
     del img_crop
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    del img
     img_rotated = img_rotated[0:int(img_rotated.shape[0] * 0.2), :]
     return img_rotated
 
