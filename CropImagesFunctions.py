@@ -9,7 +9,6 @@ from collections import defaultdict, Counter
 def cif_step1(img):
     img_small = cv2.resize(img, (0, 0), fx=0.25, fy=0.25)
     img_big = cv2.resize(img, (0, 0), fx=3, fy=3)
-    del img
     gray = cv2.cvtColor(img_small, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(gray, 10, 10)
     h = img_small.shape[0]
@@ -24,12 +23,8 @@ def cif_step1(img):
     X1 = int(X * 3 / 0.25)
     Y1 = int(Y * 3 / 0.25)
     R1 = int(Rmax * 3 / 0.25) + 10
-    del circles
-    del circles_df
     img_crop = img_big[Y1 - R1:Y1 + R1, X1 - R1:X1 + R1].copy()
-    del img_big
     img_polar = cv2.logPolar(img_crop, (R1, R1), 72.5 * 3 / 0.25, cv2.WARP_FILL_OUTLIERS)
-    del img_crop
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
     img_rotated = img_rotated[0:int(img_rotated.shape[0] * 0.2), :]
     return img_rotated
@@ -49,7 +44,6 @@ def cif_step2(img_rotated):
             H = i
             break
     output = img_rotated[H:, :]
-    del counts
     return output
 
 
