@@ -1,6 +1,4 @@
 [packages]
-os = "*"
-sys = "*"
 gunicorn = "*"
 flask = "*"
 requests = "*"
