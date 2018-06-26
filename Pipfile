@@ -6,7 +6,6 @@ opencv-python = "*"
 opencv-contrib-python = "*"
 numpy = "*"
 pandas = "*"
-collections = "*"
 
 [requires]
 python_version = "2.7"
