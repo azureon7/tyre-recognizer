@@ -8,7 +8,6 @@ from collections import defaultdict, Counter
 
 def cif_step1(img):
     img_small = cv2.resize(img, (0, 0), fx=0.25, fy=0.25)
-    img_big = cv2.resize(img, (0, 0), fx=3, fy=3)
     gray = cv2.cvtColor(img_small, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(gray, 10, 10)
     h = img_small.shape[0]
@@ -17,15 +16,21 @@ def cif_step1(img):
                                minRadius=int(h / 4), maxRadius=int(h / 2.2), param1=100, param2=175)
     circles = np.int0(np.array(circles))
     circles_df = pd.DataFrame(circles[0], columns=['X', 'Y', 'R'])
+    del circles
     X = int(circles_df.X.mean())  # centro medio, coordinata X
     Y = int(circles_df.Y.mean())  # centro medio, coordinata Y
     Rmax = int(circles_df.R.max())  # raggio massimo
+    del circles_df
     X1 = int(X * 3 / 0.25)
     Y1 = int(Y * 3 / 0.25)
     R1 = int(Rmax * 3 / 0.25) + 10
+    img_big = cv2.resize(img, (0, 0), fx=3, fy=3)
     img_crop = img_big[Y1 - R1:Y1 + R1, X1 - R1:X1 + R1].copy()
+    del img_big
     img_polar = cv2.logPolar(img_crop, (R1, R1), 72.5 * 3 / 0.25, cv2.WARP_FILL_OUTLIERS)
+    del img_crop
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    del img_polar
     img_rotated = img_rotated[0:int(img_rotated.shape[0] * 0.2), :]
     return img_rotated
 
