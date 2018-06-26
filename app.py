@@ -1,7 +1,6 @@
 import os
 from flask import Flask, request, redirect, url_for, send_from_directory, render_template
 #import cv2
-import os
 import sys
 #import datetime
 #import traceback
