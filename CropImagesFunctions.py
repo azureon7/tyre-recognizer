@@ -39,7 +39,7 @@ def cif_step2(img_rotated):
     altezza = img_rotated.shape[0]
     larghezza = img_rotated.shape[1]
     for i in range(altezza):
-        print(i, larghezza/5)
+        #print(i, larghezza/5)
         help_img = img_rotated[i:i+1, :int(larghezza/5)]
         pixels = help_img.reshape(-1, 3)
         counts = defaultdict(int)
