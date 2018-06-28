@@ -3,7 +3,7 @@ from flask import Flask, request, redirect, url_for, send_from_directory, render
 import cv2
 import sys
 import numpy as np
-from CropImagesFunctions import cif_step1, cif_step2, cif_step3, cif_isoutlier
+from CropImagesFunctions import cif_step1
 
 app = Flask(__name__,static_folder=None)
 
@@ -24,13 +24,11 @@ def upload_file():
     # convert numpy array to image
     img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
     step1 = cif_step1(img)
-    step2 = cif_step2(step1)
-    step3 = cif_step3(step2)
     
     filename='foto.jpg'
     f = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     #print f, UPLOAD_FOLDER
-    cv2.imwrite(f, step3)
+    cv2.imwrite(f, step1)
     #file.save(f)
     return redirect(url_for('uploaded_file', filename=filename))
     
