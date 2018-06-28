@@ -41,7 +41,19 @@ def cif_step1(img):
     Y = int(circles_df.iloc[:min(50, len(circles_df)), 1].mean()/const1)
     img = img[Y-Rmax:Y+Rmax,X-Rmax:X+Rmax]
     img = cv2.resize(img, (5000, 5000))
+    return img
+
+
+def cif_step2_1(img):
     img_polar = cv2.logPolar(img, (2500, 2500), 635, cv2.WARP_FILL_OUTLIERS)
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    img_rotated = img_rotated[30:350, :]
+    img_rotated = img_rotated[30:360, :]
+    return img_rotated
+
+
+def cif_step2_2(img):
+    img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    img_polar = cv2.logPolar(img, (2500, 2500), 635, cv2.WARP_FILL_OUTLIERS)
+    img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    img_rotated = img_rotated[30:360, :]
     return img_rotated
