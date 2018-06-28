@@ -24,11 +24,12 @@ def upload_file():
     # convert numpy array to image
     img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
     step1 = cif_step1(img)
+    step2_1 = cif_step2_1(step1)
     
     filename='foto.jpg'
     f = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     #print f, UPLOAD_FOLDER
-    cv2.imwrite(f, step1)
+    cv2.imwrite(f, step2_1)
     #file.save(f)
     return redirect(url_for('uploaded_file', filename=filename))
     
