@@ -3,7 +3,7 @@ from flask import Flask, request, redirect, url_for, send_from_directory, render
 import cv2
 import sys
 import numpy as np
-from CropImagesFunctions import cif_step1, cif_step2_1
+from CropImagesFunctions import cif_step1, cif_step2_1, cif_crop
 
 app = Flask(__name__,static_folder=None)
 
