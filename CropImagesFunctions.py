@@ -20,9 +20,9 @@ def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
 
 
 def cif_step1(img):
-    img = image_resize(img, width=6000)
     img_small = image_resize(img, width=320)
-    const1 = 320.0 / 6000
+    w_final = 9000
+    const1 = 320.0 / w_final
     gray = cv2.cvtColor(img_small, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(gray, 20, 20)
     h = img_small.shape[0]
@@ -39,21 +39,41 @@ def cif_step1(img):
     Rmax = int((2.5+circles_df.R.max())/const1)
     X = int(circles_df.iloc[:min(50, len(circles_df)), 0].mean()/const1)
     Y = int(circles_df.iloc[:min(50, len(circles_df)), 1].mean()/const1)
-    img = img[Y-Rmax:Y+Rmax,X-Rmax:X+Rmax]
-    img = cv2.resize(img, (5000, 5000))
+    img = image_resize(img, width=w_final)
+    img = img[max(Y-Rmax,0):Y+Rmax,max(X-Rmax,0):X+Rmax]
+    #print Y-Rmax
+    img = cv2.resize(img, (8000, 8000))
     return img
 
 
 def cif_step2_1(img):
-    img_polar = cv2.logPolar(img, (2500, 2500), 635, cv2.WARP_FILL_OUTLIERS)
+    img_polar = cv2.logPolar(img, (4000, 4000), 970, cv2.WARP_FILL_OUTLIERS)
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    img_rotated = img_rotated[30:360, :]
+    img_rotated = img_rotated[:450, :]
     return img_rotated
 
 
 def cif_step2_2(img):
     img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    img_polar = cv2.logPolar(img, (2500, 2500), 635, cv2.WARP_FILL_OUTLIERS)
+    img_polar = cv2.logPolar(img, (4000, 4000), 970, cv2.WARP_FILL_OUTLIERS)
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    img_rotated = img_rotated[30:360, :]
+    img_rotated = img_rotated[:450, :]
     return img_rotated
+
+
+def cif_croping(img):
+    img_g = cv2.cvtColor(img[150:, :200], cv2.COLOR_BGR2GRAY)
+    h, w = img_g.shape[:2]
+    valori = []
+    H = h
+    for i in xrange(h):
+        help_img = img_g[i:i+1,:].reshape(-1,1)
+        mediana = np.median(help_img)
+        if i < 50:
+            valori.append(mediana)
+        elif i > 50 and abs(mediana-np.median(valori)) < 110:
+            valori.append(mediana)
+        elif i > 50 and abs(mediana-np.median(valori)) >= 110:
+            H = i+150+10
+            break
+    return img[:H, :]
