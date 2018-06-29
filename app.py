@@ -26,12 +26,12 @@ def upload_file():
     
     try:
         step1 = cif_step1(img)
-        step2_1 = cif_step2_1(step1)
-        step3 = cif_crop(step2_1)        
+        #step2_1 = cif_step2_1(step1)
+        #step3 = cif_crop(step2_1)        
         filename='foto.jpg'
         f = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         #print f, UPLOAD_FOLDER
-        cv2.imwrite(f, step3)
+        cv2.imwrite(f, step1)
         #file.save(f)
         return redirect(url_for('uploaded_file', filename=filename))
     except:
