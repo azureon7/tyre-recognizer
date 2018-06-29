@@ -43,6 +43,10 @@ def cif_step1(img):
     img = img[max(Y-Rmax,0):Y+Rmax,max(X-Rmax,0):X+Rmax]
     #print Y-Rmax
     img = cv2.resize(img, (8000, 8000))
+    del circles_df
+    img = cv2.logPolar(img, (4000, 4000), 970, cv2.WARP_FILL_OUTLIERS)
+    img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    img = img[:450, :]
     return img
 
 
