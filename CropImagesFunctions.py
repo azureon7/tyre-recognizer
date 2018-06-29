@@ -21,7 +21,7 @@ def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
 
 def cif_step1(img):
     img_small = image_resize(img, width=320)
-    w_final = 9000
+    w_final = 7000
     const1 = 320.0 / w_final
     gray = cv2.cvtColor(img_small, cv2.COLOR_BGR2GRAY)
     edges = cv2.Canny(gray, 20, 20)
@@ -42,26 +42,22 @@ def cif_step1(img):
     img = image_resize(img, width=w_final)
     img = img[max(Y-Rmax,0):Y+Rmax,max(X-Rmax,0):X+Rmax]
     #print Y-Rmax
-    img = cv2.resize(img, (8000, 8000))
-    del circles_df
-    img = cv2.logPolar(img, (4000, 4000), 970, cv2.WARP_FILL_OUTLIERS)
-    img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    img = img[:450, :]
+    img = cv2.resize(img, (6000, 6000))
     return img
 
 
 def cif_step2_1(img):
-    img_polar = cv2.logPolar(img, (4000, 4000), 970, cv2.WARP_FILL_OUTLIERS)
+    img_polar = cv2.logPolar(img, (3000, 3000), 758, cv2.WARP_FILL_OUTLIERS)
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    img_rotated = img_rotated[:450, :]
+    img_rotated = img_rotated[:350, :]
     return img_rotated
 
 
 def cif_step2_2(img):
     img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    img_polar = cv2.logPolar(img, (4000, 4000), 970, cv2.WARP_FILL_OUTLIERS)
+    img_polar = cv2.logPolar(img, (3000, 3000), 758, cv2.WARP_FILL_OUTLIERS)
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    img_rotated = img_rotated[:450, :]
+    img_rotated = img_rotated[:350, :]
     return img_rotated
 
 
