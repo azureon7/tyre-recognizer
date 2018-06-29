@@ -61,7 +61,7 @@ def cif_step2_2(img):
     return img_rotated
 
 
-def cif_croping(img):
+def cif_crop(img):
     img_g = cv2.cvtColor(img[150:, :200], cv2.COLOR_BGR2GRAY)
     h, w = img_g.shape[:2]
     valori = []
