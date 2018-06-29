@@ -26,8 +26,8 @@ def upload_file():
     
     try:
         step1 = cif_step1(img)
-        #step2_1 = cif_step2_1(step1)
-        #step3 = cif_crop(step2_1)        
+        step1 = cif_step2_1(step1)
+        step1 = cif_crop(step1)        
         filename='foto.jpg'
         f = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         #print f, UPLOAD_FOLDER
