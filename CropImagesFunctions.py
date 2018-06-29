@@ -66,7 +66,7 @@ def cif_crop(img):
     h, w = img_g.shape[:2]
     valori = []
     H = h
-    for i in xrange(h):
+    for i in range(h):
         help_img = img_g[i:i+1,:].reshape(-1,1)
         mediana = np.median(help_img)
         if i < 50:
