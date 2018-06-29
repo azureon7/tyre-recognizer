@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, redirect, url_for, send_from_directory, render_template
 import cv2
 import sys
+import traceback
 import numpy as np
 from CropImagesFunctions import cif_step1, cif_step2_1, cif_crop
 
@@ -35,6 +36,10 @@ def upload_file():
         #file.save(f)
         return redirect(url_for('uploaded_file', filename=filename))
     except:
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+        for line in lines:
+            print('!!  ' + line + '\n')
         return render_template('index.html')
     
 @app.route('/show/<filename>')
