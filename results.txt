@@ -1,0 +1,59 @@
+INFO:tensorflow:Final test accuracy = 83.7% (N=86)
+INFO:tensorflow:=== MISCLASSIFIED TEST IMAGES ===
+INFO:tensorflow:                 tf_files/dataset\bridgestone\brid_20180603_185935.jpg  michelin
+INFO:tensorflow:              tf_files/dataset\bridgestone\brid_90_20180616_162436.jpg  michelin
+INFO:tensorflow:                 tf_files/dataset\bridgestone\brid_20180603_185935.jpg  michelin
+INFO:tensorflow:              tf_files/dataset\bridgestone\brid_90_20180616_162436.jpg  michelin
+INFO:tensorflow:                 tf_files/dataset\continental\cont_20180603_185000.jpg  michelin
+INFO:tensorflow:              tf_files/dataset\continental\cont_90_20180615_111915.jpg  michelin
+INFO:tensorflow:         tf_files/dataset\continental\cont_IMG_20180710_113558_HDR.jpg  pirelli
+INFO:tensorflow:                 tf_files/dataset\continental\cont_20180603_185000.jpg  michelin
+INFO:tensorflow:              tf_files/dataset\continental\cont_90_20180615_111915.jpg  michelin
+INFO:tensorflow:         tf_files/dataset\continental\cont_IMG_20180710_113558_HDR.jpg  pirelli
+INFO:tensorflow:                     tf_files/dataset\pirelli\pire_20180609_111645.jpg  michelin
+INFO:tensorflow:             tf_files/dataset\pirelli\pire_IMG_20180710_113322_HDR.jpg  continental
+INFO:tensorflow:                     tf_files/dataset\pirelli\pire_20180609_111645.jpg  michelin
+INFO:tensorflow:             tf_files/dataset\pirelli\pire_IMG_20180710_113322_HDR.jpg  continental
+INFO:tensorflow:Froze 2 variables.
+Converted 2 variables to const ops.
+
+
+
+
+
+INFO:tensorflow:Final test accuracy = 88.5% (N=278)
+INFO:tensorflow:=== MISCLASSIFIED TEST IMAGES ===
+INFO:tensorflow:                 tf_files/dataset\bridgestone\brid_20180616_154338.jpg  continental
+INFO:tensorflow:      tf_files/dataset\bridgestone\brid_90_IMG_20180710_112819_HDR.jpg  continental
+INFO:tensorflow:      tf_files/dataset\bridgestone\brid_90_IMG_20180710_120646_HDR.jpg  michelin
+INFO:tensorflow:                 tf_files/dataset\bridgestone\brid_20180616_154338.jpg  continental
+INFO:tensorflow:      tf_files/dataset\bridgestone\brid_90_IMG_20180710_112819_HDR.jpg  continental
+INFO:tensorflow:      tf_files/dataset\bridgestone\brid_90_IMG_20180710_120646_HDR.jpg  michelin
+INFO:tensorflow:                 tf_files/dataset\continental\cont_20180603_185000.jpg  michelin
+INFO:tensorflow:              tf_files/dataset\continental\cont_90_20180531_152457.jpg  michelin
+INFO:tensorflow:              tf_files/dataset\continental\cont_90_20180531_152752.jpg  bridgestone
+INFO:tensorflow:         tf_files/dataset\continental\cont_IMG_20180710_112728_HDR.jpg  bridgestone
+INFO:tensorflow:         tf_files/dataset\continental\cont_IMG_20180710_113558_HDR.jpg  michelin
+INFO:tensorflow:         tf_files/dataset\continental\cont_IMG_20180710_120831_HDR.jpg  michelin
+INFO:tensorflow:                 tf_files/dataset\continental\cont_20180603_185000.jpg  michelin
+INFO:tensorflow:              tf_files/dataset\continental\cont_90_20180531_152457.jpg  michelin
+INFO:tensorflow:              tf_files/dataset\continental\cont_90_20180531_152752.jpg  bridgestone
+INFO:tensorflow:         tf_files/dataset\continental\cont_IMG_20180710_112728_HDR.jpg  bridgestone
+INFO:tensorflow:         tf_files/dataset\continental\cont_IMG_20180710_113558_HDR.jpg  michelin
+INFO:tensorflow:         tf_files/dataset\continental\cont_IMG_20180710_120831_HDR.jpg  michelin
+INFO:tensorflow:                    tf_files/dataset\michelin\mich_20180531_153024.jpg  continental
+INFO:tensorflow:         tf_files/dataset\michelin\mich_90_IMG_20180710_113859_HDR.jpg  pirelli
+INFO:tensorflow:                    tf_files/dataset\michelin\mich_20180531_153024.jpg  continental
+INFO:tensorflow:         tf_files/dataset\michelin\mich_90_IMG_20180710_113859_HDR.jpg  pirelli
+INFO:tensorflow:                     tf_files/dataset\pirelli\pire_20180609_111645.jpg  michelin
+INFO:tensorflow:                     tf_files/dataset\pirelli\pire_20180615_104610.jpg  michelin
+INFO:tensorflow:                     tf_files/dataset\pirelli\pire_20180615_111303.jpg  continental
+INFO:tensorflow:                  tf_files/dataset\pirelli\pire_90_20180615_104740.jpg  continental
+INFO:tensorflow:             tf_files/dataset\pirelli\pire_IMG_20180710_113322_HDR.jpg  continental
+INFO:tensorflow:                     tf_files/dataset\pirelli\pire_20180609_111645.jpg  michelin
+INFO:tensorflow:                     tf_files/dataset\pirelli\pire_20180615_104610.jpg  michelin
+INFO:tensorflow:                     tf_files/dataset\pirelli\pire_20180615_111303.jpg  continental
+INFO:tensorflow:                  tf_files/dataset\pirelli\pire_90_20180615_104740.jpg  continental
+INFO:tensorflow:             tf_files/dataset\pirelli\pire_IMG_20180710_113322_HDR.jpg  continental
+
+

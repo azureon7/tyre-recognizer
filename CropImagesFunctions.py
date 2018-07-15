@@ -41,26 +41,39 @@ def cif_step1(img):
     Y = int(circles_df.iloc[:min(50, len(circles_df)), 1].mean()/const1)
     img = image_resize(img, width=w_final)
     img = img[max(Y-Rmax,0):Y+Rmax,max(X-Rmax,0):X+Rmax]
-    #print Y-Rmax
     img = cv2.resize(img, (6000, 6000))
     return img
 
 
-def cif_step2_1(img):
+def cif_logpolar_manual(img):
+    img_polar = cv2.logPolar(img, (3000, 3000), 749, cv2.WARP_FILL_OUTLIERS)
+    img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    img_rotated = img_rotated[:300, :]
+    return img_rotated
+    
+    
+def cif_logpolar_manual_90(img):
+    img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    img_polar = cv2.logPolar(img, (3000, 3000), 749, cv2.WARP_FILL_OUTLIERS)
+    img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    img_rotated = img_rotated[:300, :]
+    return img_rotated    
+    
+def cif_logpolar_auto(img):
     img_polar = cv2.logPolar(img, (3000, 3000), 758, cv2.WARP_FILL_OUTLIERS)
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    img_rotated = img_rotated[:350, :]
+    img_rotated = img_rotated[:300, :]
     return img_rotated
-
-
-def cif_step2_2(img):
+    
+    
+def cif_logpolar_auto_90(img):
     img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
     img_polar = cv2.logPolar(img, (3000, 3000), 758, cv2.WARP_FILL_OUTLIERS)
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    img_rotated = img_rotated[:350, :]
-    return img_rotated
+    img_rotated = img_rotated[:300, :]
+    return img_rotated  
 
-
+    
 def cif_crop(img):
     img_g = cv2.cvtColor(img[150:, :200], cv2.COLOR_BGR2GRAY)
     h, w = img_g.shape[:2]
@@ -77,3 +90,9 @@ def cif_crop(img):
             H = i+150+10
             break
     return img[:H, :]
+
+    
+def cif_preproc(img):
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = image_resize(img, width=5600)
+    return img

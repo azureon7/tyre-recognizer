@@ -6,6 +6,7 @@ opencv-python = "*"
 opencv-contrib-python = "*"
 numpy = "*"
 pandas = "*"
+tensorflow = "*"
 
 [requires]
-python_version = "2.7"
+python_version = "3.6"
