@@ -65,12 +65,12 @@ body, span, a, input {
 
 
 #circle_try {
-  position: fixed;
+  position: relative;
   display: block;
   width:170px;
   height:170px;
-  margin-top: -215px;
-  margin-left: 45px;
+  top: -475px;
+  left: 45px;
   line-height: 170px;
   text-align: center;
   z-index:9
@@ -125,6 +125,11 @@ ul, ul li {
   position: fixed;
 }
 
+#circle_nav ul li {
+  position: relative;
+  display: block
+}
+
 #circle_nav ul li:first-child a span{  
   padding-top:55px;
   padding-left: 10px;
@@ -146,21 +151,22 @@ ul, ul li {
   border-radius: 130px 0 0 0;
 }
 #circle_nav ul li:nth-child(2){
-  margin-left: 130px;
-  margin-top: -130px;
+  left: 130px;
+  top: -130px;
   text-align: center
 }
 #circle_nav ul li:nth-child(2) a{
   border-radius: 0 130px 0 0;
 }
 #circle_nav ul li:nth-child(3){
-  margin-left: 130px;
+  left: 130px;
+  top: -130px
 }
 #circle_nav ul li:nth-child(3) a{
   border-radius: 0 0 130px 0;
 }
 #circle_nav ul li:nth-child(4){
-  margin-top: -130px
+  top: -260px
 }
 #circle_nav ul li:nth-child(4) a{
   border-radius: 0 0 0 130px;
