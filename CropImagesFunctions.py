@@ -60,7 +60,7 @@ def cif_logpolar_manual_90(img):
     return img_rotated    
     
 def cif_logpolar_auto(img):
-    img_polar = cv2.logPolar(img, (3000, 3000), 752, cv2.WARP_FILL_OUTLIERS)
+    img_polar = cv2.logPolar(img, (3000, 3000), 758, cv2.WARP_FILL_OUTLIERS)
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
     img_rotated = img_rotated[:300, :]
     return img_rotated
@@ -68,7 +68,7 @@ def cif_logpolar_auto(img):
     
 def cif_logpolar_auto_90(img):
     img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    img_polar = cv2.logPolar(img, (3000, 3000), 752, cv2.WARP_FILL_OUTLIERS)
+    img_polar = cv2.logPolar(img, (3000, 3000), 758, cv2.WARP_FILL_OUTLIERS)
     img_rotated = cv2.rotate(img_polar, cv2.ROTATE_90_COUNTERCLOCKWISE)
     img_rotated = img_rotated[:300, :]
     return img_rotated  
