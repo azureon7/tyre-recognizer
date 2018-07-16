@@ -1,180 +1,193 @@
-body {
-    background:#cceeff
+@font-face { font-family: EnterTheGrid; src: url('enter-the-grid.ttf'); }
+@font-face { font-family: renner; src: url('renner.ttf'); } 
+
+body{
+    height:100%;
+    background-attachment:fixed;
+    background-image: linear-gradient(top #000 #999);
+    background-image: -moz-linear-gradient(top, #000, #666);
+    background-image: -ms-linear-gradient(top, #000, #666);
+    background-image: -o-linear-gradient(top, #000, #666);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#555));
 }
 
-.container{
-  width: 80%;
-  max-width: 800px;
-  margin: auto;
+body, span, a, input {
+  font-family: renner, trebuchet ms;
+}
+
+ 
+
+.container {
+    max-width: 1000px;
+    width: 80%;
+    height: 800px;
+    background: #838383;
+    margin: 40px auto 40px auto;
+    border-radius: 50px;
+    border: 2px solid black
+}
+
+.header{
+    max-width:100%;
+    height: auto;
+}
+
+.header img{
+    max-width:100%;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 45px 45px 0px 0px;
+    border-radius: 45px 45px 0px 0px; 
+}
+
+.togglenav {
+    display: block;
+    position: fixed;
+    top: 220px;
+    left: 5%;
+    width: 100px;
+    height:100px;
+    background: url(../imgs/logo_small.png);
+    background-size:100px;
+    border: 0
+}
+
+#circle_nav {
+  width:260px;
+  height:260px;
+  position: fixed;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  top: 40%;
+  z-index: 0;
+  display: none
+}
+
+
+#circle_try {
+  position: fixed;
+  display: block;
+  width:170px;
+  height:170px;
+  margin-top: -215px;
+  margin-left: 45px;
+  line-height: 170px;
+  text-align: center;
+  z-index:9
+}
+
+#circle_try a{
+  display:block;
+  border-radius:50%;
+  width: 170px;
+  background: white;
+  text-decoration: none;
+}
+
+#circle_try span{  
+  font-family: EnterTheGrid, impact;
+  font-style: italic;
+  font-size: 40px;
+  color: red
+}
+
+#circle_try a:hover{
+    background: #ffcc66;
+    -webkit-transition: background 0.5s ease-out;  
+    -moz-transition: background 0.5s ease-out;  
+    -o-transition: background 0.5s ease-out;  
+    transition: background 0.5s ease-out; 
+}
+
+
+ul, ul li {
+   margin:0;
+   padding: 0;
+   text-indent: 0;
+   overflow: hidden
+}
+
+#circle_nav li a{
+  display: block;
+  width: 130px;
+  height: 130px;
+  background: #262626;
+  color: white;
+  font-size: 19px
+}
+
+#circle_nav a.clickable:hover{
+  background: #666666;
+}
+
+#circle_nav ul li a span{
+  display: block;
+  position: fixed;
+}
+
+#circle_nav ul li:first-child a span{  
+  padding-top:55px;
+  padding-left: 10px;
+  -webkit-transform: rotate(-45deg); 
+  -moz-transform: rotate(-45deg);
+}
+
+#circle_nav ul li:nth-child(2) a span{
+  padding-top:23px;
+  padding-left:63px;
+  -webkit-transform: rotate(45deg); 
+  -moz-transform: rotate(45deg);
+}
+
+
+/* set circle */
+
+#circle_nav ul li:first-child a{
+  border-radius: 130px 0 0 0;
+}
+#circle_nav ul li:nth-child(2){
+  margin-left: 130px;
+  margin-top: -130px;
   text-align: center
 }
-
-.inline-labels{
-  display:none
+#circle_nav ul li:nth-child(2) a{
+  border-radius: 0 130px 0 0;
+}
+#circle_nav ul li:nth-child(3){
+  margin-left: 130px;
+}
+#circle_nav ul li:nth-child(3) a{
+  border-radius: 0 0 130px 0;
+}
+#circle_nav ul li:nth-child(4){
+  margin-top: -130px
+}
+#circle_nav ul li:nth-child(4) a{
+  border-radius: 0 0 0 130px;
 }
 
-/* jquery.Jcrop.css v0.9.12 - MIT License */
-/*
-  The outer-most container in a typical Jcrop instance
-  If you are having difficulty with formatting related to styles
-  on a parent element, place any fixes here or in a like selector
+button:focus { outline-style: none; }
 
-  You can also style this element if you want to add a border, etc
-  A better method for styling can be seen below with .jcrop-light
-  (Add a class to the holder and style elements for that extended class)
-*/
-.jcrop-holder {
-  direction: ltr;
-  text-align: left;
+.try_preview a {
+    background: white;
+    display: block;
+    height: 225px;
+    width: 300px;
 }
-/* Selection Border */
-.jcrop-vline,
-.jcrop-hline {
-  background: #ffffff url("Jcrop.gif");
-  font-size: 0;
-  position: absolute;
+
+.try_preview img {
+    width: 300px;
+    transition: .3s ease;
 }
-.jcrop-vline {
-  height: 100%;
-  width: 1px !important;
+
+.try_preview img:hover {
+    opacity: 0.5
 }
-.jcrop-vline.right {
-  right: 0;
-}
-.jcrop-hline {
-  height: 1px !important;
-  width: 100%;
-}
-.jcrop-hline.bottom {
-  bottom: 0;
-}
-/* Invisible click targets */
-.jcrop-tracker {
-  height: 100%;
-  width: 100%;
-  /* "turn off" link highlight */
-  -webkit-tap-highlight-color: transparent;
-  /* disable callout, image save panel */
-  -webkit-touch-callout: none;
-  /* disable cut copy paste */
-  -webkit-user-select: none;
-}
-/* Selection Handles */
-.jcrop-handle {
-  background-color: #333333;
-  border: 1px #eeeeee solid;
-  width: 7px;
-  height: 7px;
-  font-size: 1px;
-}
-.jcrop-handle.ord-n {
-  left: 50%;
-  margin-left: -4px;
-  margin-top: -4px;
-  top: 0;
-}
-.jcrop-handle.ord-s {
-  bottom: 0;
-  left: 50%;
-  margin-bottom: -4px;
-  margin-left: -4px;
-}
-.jcrop-handle.ord-e {
-  margin-right: -4px;
-  margin-top: -4px;
-  right: 0;
-  top: 50%;
-}
-.jcrop-handle.ord-w {
-  left: 0;
-  margin-left: -4px;
-  margin-top: -4px;
-  top: 50%;
-}
-.jcrop-handle.ord-nw {
-  left: 0;
-  margin-left: -4px;
-  margin-top: -4px;
-  top: 0;
-}
-.jcrop-handle.ord-ne {
-  margin-right: -4px;
-  margin-top: -4px;
-  right: 0;
-  top: 0;
-}
-.jcrop-handle.ord-se {
-  bottom: 0;
-  margin-bottom: -4px;
-  margin-right: -4px;
-  right: 0;
-}
-.jcrop-handle.ord-sw {
-  bottom: 0;
-  left: 0;
-  margin-bottom: -4px;
-  margin-left: -4px;
-}
-/* Dragbars */
-.jcrop-dragbar.ord-n,
-.jcrop-dragbar.ord-s {
-  height: 7px;
-  width: 100%;
-}
-.jcrop-dragbar.ord-e,
-.jcrop-dragbar.ord-w {
-  height: 100%;
-  width: 7px;
-}
-.jcrop-dragbar.ord-n {
-  margin-top: -4px;
-}
-.jcrop-dragbar.ord-s {
-  bottom: 0;
-  margin-bottom: -4px;
-}
-.jcrop-dragbar.ord-e {
-  margin-right: -4px;
-  right: 0;
-}
-.jcrop-dragbar.ord-w {
-  margin-left: -4px;
-}
-/* The "jcrop-light" class/extension */
-.jcrop-light .jcrop-vline,
-.jcrop-light .jcrop-hline {
-  background: #ffffff;
-  filter: alpha(opacity=70) !important;
-  opacity: .70!important;
-}
-.jcrop-light .jcrop-handle {
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  background-color: #000000;
-  border-color: #ffffff;
-  border-radius: 3px;
-}
-/* The "jcrop-dark" class/extension */
-.jcrop-dark .jcrop-vline,
-.jcrop-dark .jcrop-hline {
-  background: #000000;
-  filter: alpha(opacity=70) !important;
-  opacity: 0.7 !important;
-}
-.jcrop-dark .jcrop-handle {
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  background-color: #ffffff;
-  border-color: #000000;
-  border-radius: 3px;
-}
-/* Simple macro to turn off the antlines */
-.solid-line .jcrop-vline,
-.solid-line .jcrop-hline {
-  background: #ffffff;
-}
-/* Fix for twitter bootstrap et al. */
-.jcrop-holder img,
-img.jcrop-preview {
-  max-width: none;
+
+/* correzioni schermi piccoli e mobile */
+
+@media screen and (max-width: 800px){
+    .container{
+        width: 100%
+    }
 }

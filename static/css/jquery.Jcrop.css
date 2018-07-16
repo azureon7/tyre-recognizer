@@ -1,3 +1,7 @@
+.inline-labels{
+  display:none
+}
+
 /* jquery.Jcrop.css v0.9.12 - MIT License */
 /*
   The outer-most container in a typical Jcrop instance

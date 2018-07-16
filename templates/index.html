@@ -2,213 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tyre Detection</title>
+  <title>TR - Homepage</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/jquery.Jcrop.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/togglemenu.js') }}"></script>
 </head>
-
-<body align="center">
-
-<div class="container">
-
-<!-- ------------- UPLOAD IMAGE ------------- -->
-
-<table style='margin:auto'>
-    <tr>
-    <td>
-        <form action="/upload" method="post" enctype="multipart/form-data" style="font-size:13pt !important">
-            <span class="btn btn-default btn-file" style="font-size:13pt !important">Choose image: <input type="file" name="image"></span>
-            <input type="submit" value="Analyze" class="btn btn-primary">
-            {% if enabledl %}
-            <label><input type="checkbox" name="enabledownload" />Enable Download</label>
-            {% endif %}
-        </form>    
-    </td>
-    <td style='padding-left:30px'> 
-        <form action="/retry" method="get">
-            <input type="submit" value="Retry">
-        </form>
-    </td>
-    </tr>
-</table>
-<br>
-
-<!-- ------------- STEP 1 ------------- -->
-
-{% if init %}
-<script type="text/javascript">
-  jQuery(function($){
-
-    var jcrop_api;
-
-    $('#target').Jcrop({
-      onChange:   showCoords,
-      onSelect:   showCoords,
-      onRelease:  clearCoords
-    },function(){
-      jcrop_api = this;
-    });
-
-    $('#coords').on('change','input',function(e){
-      var x1 = $('#x1').val(),
-          x2 = $('#x2').val(),
-          y1 = $('#y1').val(),
-          y2 = $('#y2').val();
-      jcrop_api.setSelect([x1,y1,x2,y2]);
-    });
-
-  });
-
-  // Simple event handler, called from onChange and onSelect
-  // event handlers, as per the Jcrop invocation above
-  function showCoords(c)
-  {
-    $('#x1').val(c.x);
-    $('#y1').val(c.y);
-    $('#x2').val(c.x2);
-    $('#y2').val(c.y2);
-    $('#w').val(c.w);
-    $('#h').val(c.h);
-  };
-
-  function clearCoords()
-  {
-    $('#coords input').val('');
-  };
-</script>
-
-<table style='margin:auto'>
-<tr>
-<td>
-<img src="{{ url_for('send_file', filename=filename) }}" id='target'>
-</td>
-</tr>
-<tr>
-<td>
-<form action="/crop_step1" id="coords" class="coords" method="post">
-    <div class="inline-labels">
-        <label>X1 <input type="text" size="4" id="x1" name="x1" /></label>
-        <label>Y1 <input type="text" size="4" id="y1" name="y1" /></label>
-        <label>X2 <input type="text" size="4" id="x2" name="x2" /></label>
-        <label>Y2 <input type="text" size="4" id="y2" name="y2" /></label>
-        <label>W <input type="text" size="4" id="w" name="w" /></label>
-        <label>H <input type="text" size="4" id="h" name="h" /></label>
-    </div>    
-    <input type="submit" value="Next step">
-</form>
-</td>
-</tr>
-</table>
-{% endif %}
-
-<!-- ------------- STEP 2 ------------- -->
+<body>
 
 
-{% if crop1 %}
-<script type="text/javascript">
-    jQuery(function($){
-
-    var jcrop_api;
-
-    $('#target').Jcrop({
-      onChange:   showCoords,
-      onSelect:   showCoords,
-      onRelease:  clearCoords
-    },function(){
-      jcrop_api = this;
-    });
-
-    $('#coords').on('change','input',function(e){
-      var x1 = $('#x1').val(),
-          x2 = $('#x2').val(),
-          y1 = $('#y1').val(),
-          y2 = $('#y2').val();
-      jcrop_api.setSelect([x1,y1,x2,y2]);
-    });
-
-    });
-
-    // Simple event handler, called from onChange and onSelect
-    // event handlers, as per the Jcrop invocation above
-    function showCoords(c)
-    {
-    $('#x1').val(c.x);
-    $('#y1').val(c.y);
-    $('#x2').val(c.x2);
-    $('#y2').val(c.y2);
-    $('#w').val(c.w);
-    $('#h').val(c.h);
-    };
-
-    function clearCoords()
-    {
-    $('#coords input').val('');
-    };
-</script>
-        
-<table style='margin:auto'>
-<tr>
-<td>
-<img src="{{ url_for('send_file', filename=filename) }}" id='target'>
-</td>
-</tr>        
-<tr>
-<td>     
-<form action="/crop_step2" id="coords" class="coords" method="post">
-    <div class="inline-labels">
-        <label>X1 <input type="text" size="4" id="x1" name="x1" /></label>
-        <label>Y1 <input type="text" size="4" id="y1" name="y1" /></label>
-        <label>X2 <input type="text" size="4" id="x2" name="x2" /></label>
-        <label>Y2 <input type="text" size="4" id="y2" name="y2" /></label>
-        <label>W <input type="text" size="4" id="w" name="w" /></label>
-        <label>H <input type="text" size="4" id="h" name="h" /></label>
-    </div>
-    <input type="submit" value="Crop and predict">
-</form>
-</td>
-</tr>
-</table>
-{% endif %}
- 
-<!-- ------------- FINAL STEP ------------- -->
-
-{% if crop2 %}        
-<table style='margin:auto'>
-<tr>
-<td style="max-width: 800px; white-space:nowrap; overflow:auto">
-    <img src="{{ url_for('send_file', filename=filename) }}" id='target'>
-</td>
-</tr>        
-<tr>
-<td>
-<br>
-<h1>Your prediction is: {{pred}}, probability = {{prob}}</h1><br>    
-    {% if downloadenabled %}   
-    <form action="/download" method="post"> <!-- or method="post" -->
-        <br>
-        <input type="submit" value="Download">
-        <input type='text' value='{{ pred }}' name='downloadname'>
-    </form>
-    <form action="/download_90" method="post"> <!-- or method="post" -->
-        <br>
-        <input type="submit" value="Download 2">
-        <input type='text' value='{{ pred }}' name='downloadname_90'>
-    </form>
-    {% endif %}
-</td>
-</tr>
-</table>
-{% endif %}
+<button onclick='ToggleNav()' class='togglenav'>
+</button>
 
 
+<div id='circle_nav'>
+  <ul>
+  <li><a href="{{ url_for('about')}}" class='clickable'><span>About</span></a></li>
+  <li><a href="{{ url_for('results')}}" class='clickable'><span>Results</span></a></li>
+  <li><a></a></li>
+  <li><a></a></li>
+  </ul>
+  <div id='circle_try'>
+  <a href="{{ url_for('try__')}}"><span>TRY</span></a>
+  </div>
+</div>
+
+<div class='container'>
+  <div class='header'>
+  <a href="{{ url_for('homepage')}}"><img src="{{ url_for('static', filename='imgs/header.png') }}"></a>
+  </div>
+  
+  
+
+  
 </div>
 
 
-
 </body>
-
-
-
-
 </html>

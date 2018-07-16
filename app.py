@@ -24,20 +24,32 @@ labels = ['Bridgestone', 'Continental', 'Michelin', 'Pirelli']
 app.config['DOWNLOAD']=False
 
 #================================================================
-# HOMEPAGE
+# HOMEPAGE , ABOUT , RESULTS , TRY
 #================================================================
 
 @app.route('/')
-def hello_world():
-    return render_template('index.html', enabledl=True)   
-
+def homepage():
+    return render_template('index.html')   
+    
+@app.route('/about')
+def about():
+    return render_template('about.html')   
+    
+@app.route('/results')
+def results():
+    return render_template('results.html')   
+    
+@app.route('/try')
+def try__():
+    return render_template('try.html', enabledl=True, preview = True)   
+    
 #================================================================
 # METHODS
 #================================================================
 
 @app.route('/show/<filename>')
 def uploaded_file(filename):
-    return render_template('index.html', filename=filename, init=True)
+    return render_template('try.html', filename=filename, init=True, preview = False)
    
 @app.route('/uploads/<filename>')
 def send_file(filename):
@@ -45,7 +57,60 @@ def send_file(filename):
      
 @app.route('/retry', methods=["GET", "POST"])
 def retry_():
-    return render_template('index.html', init=False, enabledl=True)
+    return render_template('try.html', init=False, enabledl=True, preview = True)
+    
+#================================================================
+# STARTING FROM IMAGE THUMBNAILS
+#================================================================
+    
+@app.route('/bridgestone')
+def bridgestone():
+    img = cv2.imread('static/imgs/bridgestone_example.jpg')
+    img_small = image_resize(img.copy(), width=const0)
+    filename='step0.jpg'
+    filename_preview='step0_preview.jpg'
+    f1 = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    f2 = os.path.join(app.config['UPLOAD_FOLDER'], filename_preview)
+    cv2.imwrite(f1, img)
+    cv2.imwrite(f2, img_small)
+    return redirect(url_for('uploaded_file', filename=filename_preview))
+
+
+@app.route('/continental')
+def continental():
+    img = cv2.imread('static/imgs/continental_example.jpg')
+    img_small = image_resize(img.copy(), width=const0)
+    filename='step0.jpg'
+    filename_preview='step0_preview.jpg'
+    f1 = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    f2 = os.path.join(app.config['UPLOAD_FOLDER'], filename_preview)
+    cv2.imwrite(f1, img)
+    cv2.imwrite(f2, img_small)
+    return redirect(url_for('uploaded_file', filename=filename_preview))
+
+@app.route('/michelin')
+def michelin():
+    img = cv2.imread('static/imgs/michelin_example.jpg')
+    img_small = image_resize(img.copy(), width=const0)
+    filename='step0.jpg'
+    filename_preview='step0_preview.jpg'
+    f1 = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    f2 = os.path.join(app.config['UPLOAD_FOLDER'], filename_preview)
+    cv2.imwrite(f1, img)
+    cv2.imwrite(f2, img_small)
+    return redirect(url_for('uploaded_file', filename=filename_preview))
+
+@app.route('/pirelli')
+def pirelli():
+    img = cv2.imread('static/imgs/pirelli_example.jpg')
+    img_small = image_resize(img.copy(), width=const0)
+    filename='step0.jpg'
+    filename_preview='step0_preview.jpg'
+    f1 = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    f2 = os.path.join(app.config['UPLOAD_FOLDER'], filename_preview)
+    cv2.imwrite(f1, img)
+    cv2.imwrite(f2, img_small)
+    return redirect(url_for('uploaded_file', filename=filename_preview))    
     
     
 #================================================================
@@ -75,7 +140,7 @@ def upload_file():
         cv2.imwrite(f2, img_small)
         return redirect(url_for('uploaded_file', filename=filename_preview))
     except:
-        return render_template('index.html', enabledl=False )
+        return render_template('try.html', enabledl=False )
 
     
 @app.route('/crop_step1', methods=["GET", "POST"])
@@ -122,7 +187,7 @@ def crop_step1():
 
 @app.route('/show_crop1/<filename>')
 def show_crop1(filename):
-    return render_template('index.html', filename=filename, init=False, crop1=True)
+    return render_template('try.html', filename=filename, init=False, crop1=True)
     
 
 @app.route('/crop_step2', methods=["GET", "POST"])
@@ -190,7 +255,7 @@ def show_crop2(filename):
         predizione = predizione_2
         prob = round(prob_2,2)
     
-    return render_template('index.html', filename='step2.jpg', init=False, crop1 = False, crop2=True,\
+    return render_template('try.html', filename='step2.jpg', init=False, crop1 = False, crop2=True,\
                             pred = predizione, prob = prob, downloadenabled=app.config['DOWNLOAD'])
     
 
