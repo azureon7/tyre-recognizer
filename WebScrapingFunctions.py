@@ -22,33 +22,10 @@ def Parser(Marca, Param1, Param2, Param3):
                 'currency': 'EUR',\
                 'Ang_pro_Seite': '50',\
                 'weiter':'0'}
-    parametri2 = {'cart_id': 'hffmk3Cw5Fkp5I2F.130.858511787',\
-                'Cookie': 'sea_rd_it_Google_Search',\
-                'Breite': Param1,\
-                'Felge': Param3,\
-                'Herst': Marca,\
-                'kategorie': '6',\
-                'Quer': Param2,\
-                'ranzahl': '4',\
-                'rsmFahrzeugart': 'ALL',\
-                'suchen': 'Trova+pneumatici',\
-                'sort_by': 'preis',\
-                'desname': 'gommadiretto.it',\
-                'shop': 'RDIT',\
-                'currency': 'EUR',\
-                'Ang_pro_Seite': '50',\
-                'weiter':'0'}
-
     page = requests.get('https://www.gommadiretto.it/cgi-bin/rshop.pl?dsco=130', params = parametri1)
     soup = BeautifulSoup(page.text, "html.parser")
     form = soup.select('form.pure-form')[0]
     righe = form.find_all('div', attrs={'class': 'row'})
-    '''
-    page = requests.get('https://www.gommadiretto.it/cgi-bin/rshop.pl?dsco=130', params = parametri2)
-    soup = BeautifulSoup(page.text, "html.parser")
-    form = soup.select('form.pure-form')[0]
-    righe+= form.find_all('div', attrs={'class': 'row'})
-    '''
     listone = []
     for i in range(50):
         low = i*2
