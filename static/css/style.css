@@ -20,7 +20,8 @@ body, span, a, input {
 .container {
     max-width: 1000px;
     width: 80%;
-    height: 800px;
+    padding-bottom: 50px;
+    min-height: 800px;
     background: #838383;
     margin: 40px auto 40px auto;
     border-radius: 50px;
@@ -188,6 +189,55 @@ button:focus { outline-style: none; }
 
 .try_preview img:hover {
     opacity: 0.5
+}
+
+div#pred_results{
+    width: 80%;
+    max-width: 80%;  
+    margin: auto    
+}
+
+div#ocr_text{
+    width: 80%;
+    color: white;
+    margin: auto;
+}
+
+div#ocr_text p {
+    padding: 13px;
+    font-size: 15px;
+    font-family: consolas, monospace;
+    border: 2px solid #CCC8AF;
+    background: black;
+}
+
+div#ocr_text span{
+    font-family: consolas, monospace;
+    color: red
+}
+
+table.scrap_results {
+    width: 80%;
+    margin: auto;
+    background: black;
+    border: 2px solid black;
+}
+
+table.scrap_results img{
+    height: 70px
+}
+
+table.scrap_results td{
+    padding: 4px;
+    background: white
+}
+
+td.aa {
+    text-align: center;
+}
+
+table.scrap_results tr:first-child td {
+    border-bottom: 1px solid black;
 }
 
 /* correzioni schermi piccoli e mobile */

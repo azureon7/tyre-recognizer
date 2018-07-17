@@ -1,10 +1,11 @@
 import os
-from flask import Flask, request, redirect, url_for, send_from_directory, render_template
+from flask import Flask, request, redirect, url_for, send_from_directory, render_template, Markup
 import cv2
 import sys
 import traceback
 import numpy as np
 from CropImagesFunctions import cif_logpolar_manual, cif_logpolar_manual_90, cif_logpolar_auto, cif_logpolar_auto_90, cif_step1, cif_crop, image_resize, cif_preproc
+from WebScrapingFunctions import Parser
 import label_image
 import tensorflow as tf
 
@@ -22,6 +23,8 @@ model = label_image.load_graph('retrained_graph.pb')
 labels = ['Bridgestone', 'Continental', 'Michelin', 'Pirelli']
 
 app.config['DOWNLOAD']=False
+
+app.config['OCR']=False
 
 #================================================================
 # HOMEPAGE , ABOUT , RESULTS , TRY
@@ -41,7 +44,8 @@ def results():
     
 @app.route('/try')
 def try__():
-    return render_template('try.html', enabledl=True, preview = True)   
+    app.config['OCR']=False
+    return render_template('try.html', enabledl=True, preview = True, OCR=False)
     
 #================================================================
 # METHODS
@@ -57,7 +61,8 @@ def send_file(filename):
      
 @app.route('/retry', methods=["GET", "POST"])
 def retry_():
-    return render_template('try.html', init=False, enabledl=True, preview = True)
+    app.config['OCR']=False
+    return render_template('try.html', init=False, enabledl=True, preview = True, OCR=False)
     
 #================================================================
 # STARTING FROM IMAGE THUMBNAILS
@@ -73,6 +78,7 @@ def bridgestone():
     f2 = os.path.join(app.config['UPLOAD_FOLDER'], filename_preview)
     cv2.imwrite(f1, img)
     cv2.imwrite(f2, img_small)
+    app.config['OCR']='bridgestone'
     return redirect(url_for('uploaded_file', filename=filename_preview))
 
 
@@ -86,6 +92,7 @@ def continental():
     f2 = os.path.join(app.config['UPLOAD_FOLDER'], filename_preview)
     cv2.imwrite(f1, img)
     cv2.imwrite(f2, img_small)
+    app.config['OCR']='continental'
     return redirect(url_for('uploaded_file', filename=filename_preview))
 
 @app.route('/michelin')
@@ -98,6 +105,7 @@ def michelin():
     f2 = os.path.join(app.config['UPLOAD_FOLDER'], filename_preview)
     cv2.imwrite(f1, img)
     cv2.imwrite(f2, img_small)
+    app.config['OCR']='michelin'
     return redirect(url_for('uploaded_file', filename=filename_preview))
 
 @app.route('/pirelli')
@@ -110,6 +118,7 @@ def pirelli():
     f2 = os.path.join(app.config['UPLOAD_FOLDER'], filename_preview)
     cv2.imwrite(f1, img)
     cv2.imwrite(f2, img_small)
+    app.config['OCR']='pirelli'
     return redirect(url_for('uploaded_file', filename=filename_preview))    
     
     
@@ -255,8 +264,27 @@ def show_crop2(filename):
         predizione = predizione_2
         prob = round(prob_2,2)
     
+    ocr_out = ''
+    param1 = 'e.g. 205'
+    param2 = 'e.g. 55'
+    param3 = 'e.g. 16'
+    if app.config['OCR'] != False:
+        ocr_results = {'bridgestone': '<p>REDWEAL\nWITHOUT CONTACTO\n\nIKAK LOAD CH 012355\nAT 850Tat1 KAX PECAS\nTUBI LESS RADIAL\nSPAR\n7516Y <span class="measur">185 65 R15 </span>SSE\nPYSWZ\nE\nOUTSIDE\nPLIECETREAD POLYESTER - 2 STEL - 1 POLYFOTTE\nSIDE ALLIPOLYESTER\nBCLX U9F (0813)\n9) 0290 74 52WRE\nE\n00933413\nD EG GODT NG PET PPSELT HEAD\nDUPIETEET\nSED DUE PEOPGE\nOLO\nNEOS DOU D\nOLD TOUTES\n-\n</p>',\
+                       'continental': '<p>Continental\n-e as .\nConfinoles\nTREAOTEAR 280\nTRACTION\nA\nTEMPERATURE\ntinental\n <span class="measur">205/55R16 </span>V.\nContiPremiumContact 5\nNOM\nDOT GYOF D7L5 1816\nCONTINENTAL\nL-99812S-2328112328473\ncontinental-tires.com\n82\nMAX INFLATION PRESSURE 350 KPA (1 PSD\nMAX LOAD 615 KG (1356 LB)\nPY\nSTELA\n</p>',\
+                       'michelin': '<p>maiores\n175/65 R\nWARNING\n <span class="measur">175/65R14 </span>\n327\nR\nA\nA\nSDPLES\nIG HELINO TUBELES RADIAL X\nBIREWOLLPLY\nCena\nMICHELINO TUBELES3 RADIAL\nFOLESTE\n122502 52\nbesparende\n</p>',\
+                       'pirelli': '<p>Per la\n7.com\nwww.pirelli\nESTERNO AUSSEN\nEXTERIEUR OUTER\nASA CANADA WA LOLEN ONLI\nLO 615 1356 051\n409001\nP <span class="measur">205/55 R16 </span>\nSTANDARD LOAD\n1316)\nRADIAL\nTUBELESS\n21.129SZ WRI\n6253353\nLIEGEZWE COQ\nOLETS\n1089978\nAG9978\n2012\n</p>'}
+        diz_param = {'bridgestone': ['185', '65', '15'],\
+                     'continental': ['205', '55', '16'],\
+                     'michelin': ['175', '65', '14'],\
+                     'pirelli': ['205', '55', '16']}
+        param1 = diz_param[app.config['OCR']][0]
+        param2 = diz_param[app.config['OCR']][1]
+        param3 = diz_param[app.config['OCR']][2]
+        ocr_out = ocr_results[app.config['OCR']]
+    
     return render_template('try.html', filename='step2.jpg', init=False, crop1 = False, crop2=True,\
-                            pred = predizione, prob = prob, downloadenabled=app.config['DOWNLOAD'])
+                            pred = predizione, prob = prob, downloadenabled=app.config['DOWNLOAD'], OCR=app.config['OCR'], ocr_text = ocr_out,
+                            marca = predizione, param1 = param1, param2 = param2, param3 = param3)
     
 
 @app.route('/download', methods=['POST'])
@@ -271,3 +299,26 @@ def return_file_90():
     nome = request.form['downloadname_90']
     nome = str(nome[:4].lower()) + '_90_' + str(app.config['image_name'])
     return send_from_directory(directory='uploads', filename='step2_90.jpg', as_attachment=True, attachment_filename=nome)
+    
+#================================================================
+# WEB SCRAPING
+#================================================================    
+
+@app.route('/scraping', methods=["GET", "POST"])
+def scraping_():
+    Marca = request.form['marchio']
+    p1 = request.form['param1']
+    p2 = request.form['param2']
+    p3 = request.form['param3']
+    
+    scraping_results = Parser(Marca, p1, p2, p3)
+    
+    return render_template('try.html', init=False, crop1 = False, crop2=False, scrap_area=True, OCR=False,\
+                           nome1=scraping_results[0]['nome'], url1=scraping_results[0]['url'],\
+                           img1=scraping_results[0]['img'], prezzo1=scraping_results[0]['price'],\
+                           nome2=scraping_results[1]['nome'], url2=scraping_results[1]['url'],\
+                           img2=scraping_results[1]['img'], prezzo2=scraping_results[1]['price'])
+
+
+
+

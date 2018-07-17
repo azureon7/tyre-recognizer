@@ -214,10 +214,12 @@
  
 <!-- ------------- FINAL STEP ------------- -->
 
-{% if crop2 %}        
-<table style='margin:auto'>
+{% if crop2 %}
+
+<div id='pred_results'>      
+<table style='margin:auto;width: 100%'>
 <tr>
-<td style="max-width: 800px; white-space:nowrap; overflow:auto">
+<td style="max-width: 500px; white-space:nowrap; overflow:auto">
     <img src="{{ url_for('send_file', filename=filename) }}" id='target'>
 </td>
 </tr>        
@@ -240,11 +242,47 @@
 </td>
 </tr>
 </table>
+</div>
 {% endif %}
-  
-  
 
-  
+<!-- ------------- OCR ------------- -->
+
+{% if OCR %}
+<div id='ocr_text'>
+{{ ocr_text|safe }}
+</div>
+{% endif %}
+
+
+{% if crop2 %}
+<div style='width:80%; margin:auto'>
+<form action='/scraping' method='post'>
+<input type='text' value='{{ marca }}' name='marchio'>
+<input type='text' value='{{ param1 }}' name='param1'>
+<input type='text' value='{{ param2 }}' name='param2'>
+<input type='text' value='{{ param3 }}' name='param3'>
+<input type="submit" value="Get Prices">
+</form>
+</div>
+{% endif %}
+
+<!-- ------------- SCRAPING ------------- -->
+
+{% if scrap_area %}
+<table class='scrap_results' cellspacing='0'>
+<tr>
+<td class='aa'><img src='{{img1}}'></td>
+<td class='bb'><a href='{{url1}}' target='_blank'>{{nome1}}</a></td>
+<td class='cc'>{{prezzo1}} €</td>
+</tr>
+<tr>
+<td class='aa'><img src='{{img2}}'></td>
+<td class='bb'><a href='{{url2}}' target='_blank'>{{nome2}}</a></td>
+<td class='cc'>{{prezzo2}} €</td>
+</tr>
+</table>
+{% endif %}
+
 </div>
 
 
