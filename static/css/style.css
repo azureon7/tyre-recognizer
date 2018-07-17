@@ -22,7 +22,7 @@ body, span, a, input {
     width: 80%;
     padding-bottom: 50px;
     min-height: 800px;
-    background: #838383;
+    background: #cccccc;
     margin: 40px auto 40px auto;
     border-radius: 50px;
     border: 2px solid black
@@ -36,8 +36,17 @@ body, span, a, input {
 .header img{
     max-width:100%;
     -moz-border-radius: 0px;
-    -webkit-border-radius: 45px 45px 0px 0px;
-    border-radius: 45px 45px 0px 0px; 
+    -webkit-border-radius: 48px 48px 0px 0px;
+    border-radius: 48px 48px 0px 0px; 
+}
+
+div.content {
+    width: 80%;
+    margin: auto
+}
+
+div.content p, div.content li{
+    font-size: 19px
 }
 
 .togglenav {
@@ -60,7 +69,7 @@ body, span, a, input {
   left: 0;
   right: 0;
   top: 40%;
-  z-index: 0;
+  z-index: 1000;
   display: none
 }
 
@@ -101,7 +110,7 @@ body, span, a, input {
 }
 
 
-ul, ul li {
+#circle_nav ul, #circle_nav ul li {
    margin:0;
    padding: 0;
    text-indent: 0;
@@ -132,8 +141,8 @@ ul, ul li {
 }
 
 #circle_nav ul li:first-child a span{  
-  padding-top:55px;
-  padding-left: 10px;
+  padding-top:53px;
+  padding-left: 7px;
   -webkit-transform: rotate(-45deg); 
   -moz-transform: rotate(-45deg);
 }
@@ -175,6 +184,10 @@ ul, ul li {
 
 button:focus { outline-style: none; }
 
+table.try_preview td{
+    padding: 10px
+}
+
 .try_preview a {
     background: white;
     display: block;
@@ -191,14 +204,9 @@ button:focus { outline-style: none; }
     opacity: 0.5
 }
 
-div#pred_results{
-    width: 80%;
-    max-width: 80%;  
-    margin: auto    
-}
 
 div#ocr_text{
-    width: 80%;
+    width: 100%;
     color: white;
     margin: auto;
 }
@@ -207,7 +215,7 @@ div#ocr_text p {
     padding: 13px;
     font-size: 15px;
     font-family: consolas, monospace;
-    border: 2px solid #CCC8AF;
+    border: 2px solid #05bc00;
     background: black;
 }
 
@@ -217,8 +225,7 @@ div#ocr_text span{
 }
 
 table.scrap_results {
-    width: 80%;
-    margin: auto;
+    width: 100%;
     background: black;
     border: 2px solid black;
 }
@@ -229,11 +236,16 @@ table.scrap_results img{
 
 table.scrap_results td{
     padding: 4px;
-    background: white
+    background: white;
+    font-size: 20px
 }
 
 td.aa {
     text-align: center;
+}
+
+td.cc {
+    width: 90px
 }
 
 table.scrap_results tr:first-child td {
@@ -246,4 +258,8 @@ table.scrap_results tr:first-child td {
     .container{
         width: 100%
     }
+    div.content {
+    width: 95%;
+    margin: auto
+}
 }

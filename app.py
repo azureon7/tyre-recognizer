@@ -34,13 +34,13 @@ app.config['OCR']=False
 def homepage():
     return render_template('index.html')   
     
-@app.route('/about')
-def about():
-    return render_template('about.html')   
+@app.route('/method')
+def method():
+    return render_template('method.html')   
     
-@app.route('/results')
-def results():
-    return render_template('results.html')   
+@app.route('/author')
+def author():
+    return render_template('author.html')   
     
 @app.route('/try')
 def try__():

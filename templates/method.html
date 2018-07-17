@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TR - About</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/togglemenu.js') }}"></script>
+</head>
+<body>
+
+
+<button onclick='ToggleNav()' class='togglenav'>
+</button>
+
+
+<div id='circle_nav'>
+  <ul>
+  <li><a href="{{ url_for('method')}}" class='clickable'><span>Method</span></a></li>
+  <li><a href="{{ url_for('author')}}" class='clickable'><span>Author</span></a></li>
+  <li><a></a></li>
+  <li><a></a></li>
+  </ul>
+  <div id='circle_try'>
+  <a href="{{ url_for('try__')}}"><span>TRY</span></a>
+  </div>
+</div>
+
+<div class='container'>
+  <div class='header'>
+  <a href="{{ url_for('homepage')}}"><img src="{{ url_for('static', filename='imgs/header.png') }}"></a>
+  </div>
+  
+  
+
+  
+</div>
+
+
+</body>
+</html>

@@ -18,8 +18,8 @@
 
 <div id='circle_nav'>
   <ul>
-  <li><a href="{{ url_for('about')}}" class='clickable'><span>About</span></a></li>
-  <li><a href="{{ url_for('results')}}" class='clickable'><span>Results</span></a></li>
+  <li><a href="{{ url_for('method')}}" class='clickable'><span>Method</span></a></li>
+  <li><a href="{{ url_for('author')}}" class='clickable'><span>Author</span></a></li>
   <li><a></a></li>
   <li><a></a></li>
   </ul>
@@ -33,9 +33,16 @@
   <a href="{{ url_for('homepage')}}"><img src="{{ url_for('static', filename='imgs/header.png') }}"></a>
   </div>
   
-  
+<div class='content'>
+
+<h1>Try the app</h1>
+
+<!-- ------------- UPLOAD IMAGE and INITIALIZE ------------- -->
 {% if preview %}  
-<table class='try_preview' style='margin:auto'>
+<p>In this section, you can test the application and download the output at the end of the process. You can choose to use one of the images below, or upload an image by yourself.</p>
+<p>The OCR step isn't fully implemented yet. You can download the final image and submit it to the Google OCR test for free, to test its ability to read the tyre size. Anyways, you can execute all the process writing by hand the inputs at the last step, before the scraping process.</p>
+<h2>Examples</h2>
+<table class='try_preview'>
 <tr>
 <td> 1) Bridgestone <br> <a href="{{ url_for('bridgestone')}}"><img src="{{ url_for('static', filename='imgs/bridgestone_example_th.jpg') }}"></a> </td>
 <td> 2) Continental <br> <a href="{{ url_for('continental')}}"><img src="{{ url_for('static', filename='imgs/continental_example_th.jpg') }}"></a> </td>
@@ -45,15 +52,9 @@
 <td> 4) Pirelli <br> <a href="{{ url_for('pirelli')}}"><img src="{{ url_for('static', filename='imgs/pirelli_example_th.jpg') }}"></a> </td>
 </tr>
 </table>
-{% endif %}
-  
-  
-  
-  
-  <!-- ------------- UPLOAD IMAGE ------------- -->
-
-
-<table style='margin:auto'>
+<br>
+<h2>Upload</h2>
+<table>
     <tr>
     <td>
         <form action="/upload" method="post" enctype="multipart/form-data">
@@ -66,17 +67,11 @@
             {% endif %}
         </form>    
     </td>
-    <td style='padding-left:30px'> 
-        <form action="/retry" method="get">
-            <input type="submit" value="Retry">
-        </form>
-    </td>
     </tr>
 </table>
-<br>
+{% endif %}
 
 <!-- ------------- STEP 1 ------------- -->
-
 {% if init %}
 <script type="text/javascript">
   jQuery(function($){
@@ -119,7 +114,8 @@
   };
 </script>
 
-<table style='margin:auto'>
+<h2>First step: find the tyre</h2>
+<table>
 <tr>
 <td>
 <img src="{{ url_for('send_file', filename=filename) }}" id='target'>
@@ -127,6 +123,7 @@
 </tr>
 <tr>
 <td>
+<br>
 <form action="/crop_step1" id="coords" class="coords" method="post">
     <div class="inline-labels">
         <label>X1 <input type="text" size="4" id="x1" name="x1" /></label>
@@ -138,15 +135,18 @@
     </div>    
     <input type="submit" value="Next step">
 </form>
+<br>
+<form action="/retry" method="get">
+<input type="submit" value="Retry">
+</form>
 </td>
 </tr>
 </table>
 {% endif %}
 
 <!-- ------------- STEP 2 ------------- -->
-
-
 {% if crop1 %}
+
 <script type="text/javascript">
     jQuery(function($){
 
@@ -187,15 +187,17 @@
     $('#coords input').val('');
     };
 </script>
-        
-<table style='margin:auto'>
+
+<h2>Second step: keep the essential</h2>    
+<table>
 <tr>
 <td>
 <img src="{{ url_for('send_file', filename=filename) }}" id='target'>
 </td>
 </tr>        
 <tr>
-<td>     
+<td>
+<br>     
 <form action="/crop_step2" id="coords" class="coords" method="post">
     <div class="inline-labels">
         <label>X1 <input type="text" size="4" id="x1" name="x1" /></label>
@@ -207,6 +209,10 @@
     </div>
     <input type="submit" value="Crop and predict">
 </form>
+<br>
+<form action="/retry" method="get">
+<input type="submit" value="Retry">
+</form>
 </td>
 </tr>
 </table>
@@ -215,47 +221,48 @@
 <!-- ------------- FINAL STEP ------------- -->
 
 {% if crop2 %}
+<h2>Third step: check the results</h2>
 
-<div id='pred_results'>      
-<table style='margin:auto;width: 100%'>
+
+<table style="max-width:100%">
 <tr>
-<td style="max-width: 500px; white-space:nowrap; overflow:auto">
+<td style="max-width: 600px; white-space:nowrap; overflow:auto">
     <img src="{{ url_for('send_file', filename=filename) }}" id='target'>
-</td>
-</tr>        
-<tr>
-<td>
-<br>
-<h1>Your prediction is: {{pred}}, probability = {{prob}}</h1><br>    
-    {% if downloadenabled %}   
-    <form action="/download" method="post"> <!-- or method="post" -->
-        <br>
-        <input type="submit" value="Download">
-        <input type='text' value='{{ pred }}' name='downloadname'>
-    </form>
-    <form action="/download_90" method="post"> <!-- or method="post" -->
-        <br>
-        <input type="submit" value="Download 2">
-        <input type='text' value='{{ pred }}' name='downloadname_90'>
-    </form>
-    {% endif %}
 </td>
 </tr>
 </table>
-</div>
-{% endif %}
+<br>
+<p>Your prediction is: <span style="background: red; color:white">{{pred}}</span>, probability = {{prob}}</p>
+        
+    {% if downloadenabled %}   
+    <table>
+    <tr>
+    <td>
+    <form action="/download" method="post"> <!-- or method="post" -->
+        <input type="submit" value="Download">
+        <input type='text' value='{{ pred }}' name='downloadname'>
+    </form>
+    </td>
+    <td>
+    <form action="/download_90" method="post" style="padding-left:20px"> <!-- or method="post" -->
+        <input type="submit" value="Download 2">
+        <input type='text' value='{{ pred }}' name='downloadname_90'>
+    </form>
+    </td>
+    </tr>
+    </table>
+    {% endif %}
 
 <!-- ------------- OCR ------------- -->
 
 {% if OCR %}
+<h2>Output of Google OCR</h2>
 <div id='ocr_text'>
 {{ ocr_text|safe }}
 </div>
 {% endif %}
 
-
-{% if crop2 %}
-<div style='width:80%; margin:auto'>
+<h2>Submit values and get prices</h2>
 <form action='/scraping' method='post'>
 <input type='text' value='{{ marca }}' name='marchio'>
 <input type='text' value='{{ param1 }}' name='param1'>
@@ -263,12 +270,17 @@
 <input type='text' value='{{ param3 }}' name='param3'>
 <input type="submit" value="Get Prices">
 </form>
-</div>
+<br>
+<form action="/retry" method="get">
+<input type="submit" value="Retry">
+</form>
 {% endif %}
 
 <!-- ------------- SCRAPING ------------- -->
 
 {% if scrap_area %}
+<h2>Last step: tyre prices from <a href='https://www.gommadiretto.it/'>GommaDiretto.it</a></h2>
+<p>You can check below the cheapest and the most expensive tyres with brand and size found in the previous steps.</p>
 <table class='scrap_results' cellspacing='0'>
 <tr>
 <td class='aa'><img src='{{img1}}'></td>
@@ -281,8 +293,13 @@
 <td class='cc'>{{prezzo2}} €</td>
 </tr>
 </table>
+<br>
+<form action="/retry" method="get">
+<input type="submit" value="Retry">
+</form>
 {% endif %}
 
+</div>
 </div>
 
 
