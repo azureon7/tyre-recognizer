@@ -15,7 +15,14 @@ body, span, a, input {
   font-family: renner, trebuchet ms;
 }
 
- 
+a, a:visited{
+	color: #002db1;
+	text-decoration: none
+}
+
+a:hover{
+	text-decoration: underline
+}
 
 .container {
     max-width: 1000px;
@@ -61,6 +68,10 @@ div.content p, div.content li{
     border: 0
 }
 
+.togglenav:hover{
+	cursor: pointer
+}
+
 ul.horiz_menu, ul.horiz_menu li {
    margin:0;
    padding: 0;
@@ -98,10 +109,11 @@ ul.horiz_menu li div#method_a:hover, ul.horiz_menu li div#result_a:hover{
     transition: background 0.3s ease-out; 
 }
 
-ul.horiz_menu li a {
+ul.horiz_menu li a, ul.horiz_menu li a:visited {
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 17px;
+    font-size: 15px;
+	font-weight: bold;
     display: block;
     height: 100%;
     width: 100%;
@@ -133,7 +145,7 @@ ul.horiz_menu li a {
   z-index:9
 }
 
-#circle_try a{
+#circle_try a, #circle_try a:visited{
   display:block;
   border-radius:50%;
   width: 170px;
@@ -144,7 +156,7 @@ ul.horiz_menu li a {
 #circle_try span{  
   font-family: EnterTheGrid, impact;
   font-style: italic;
-  font-size: 40px;
+  font-size: 50px;
   color: red
 }
 
@@ -164,7 +176,7 @@ ul.horiz_menu li a {
    overflow: hidden
 }
 
-#circle_nav li a{
+#circle_nav li a,#circle_nav li a:visited{
   display: block;
   width: 130px;
   height: 130px;
@@ -235,7 +247,7 @@ table.try_preview td{
     padding: 10px
 }
 
-.try_preview a {
+.try_preview a, .try_preview a:visited {
     background: white;
     display: block;
     height: 225px;

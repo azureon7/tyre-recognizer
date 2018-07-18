@@ -36,12 +36,37 @@
 <h1>About the application</h1>
 
 <ul class='horiz_menu'>
-<li><div id="method_a" class='clicked'><a href="#" onclick="Method()">Methodology</a></div></li>
-<li><div id="result_a" class='not_clicked'><a href="#" onclick="Result()">Some results</a></div></li>
+<li><div id="method_a" class='clicked'><a href="#" onclick="Method()">Preprocessing</a></div></li>
+<li><div id="result_a" class='not_clicked'><a href="#" onclick="Result()">Classifier & ocr</a></div></li>
 </ul>
 
 <div id='methodology' style='display:block'>
-<p>METHODDDDS</p>
+<p>In this section I explain step by step how the application works; I emphasize that the entire code is written in Python 3.6 and is hosted at <a href='https://github.com/fabiomarigo7/tyredetect'>this GitHub repository</a>.</p>
+<h2>Step 1: find the circles</h2>
+<p>This first step is the most crucial: a good detection of the tyre into the image will improve the quality of all the process, included the final prediction of the brand and the Google's OCR output. To make this, you can let the application work automatically or help it drawing a rectangle on the image that will circumscribe the tyre. If the photo is well done, rectangle's sides should be tangent to the circle of the tyre, like the image below.
+<br>
+<img src="{{ url_for('static', filename='imgs/step1.png') }}">
+<br>
+If you don't draw anything, the application will analyze the image by itself. The OpenCV's function <a href='https://docs.opencv.org/3.1.0/da/d53/tutorial_py_houghcircles.html'>HoughCircles()</a> finds every circumference with a minimum radius. I expect that it will find a lot of circles into the image, so I keep only those with the center very close to the median of all centers. Then, I assume that the average of the centers of the remaining circumference will be very similar to the effective tyre's center. So, I calculate that and I crop the image with center into the average, and creating a square with side equal to the maximum diameter. 
+In the image below, the red part is which has been cropped out.
+<br>
+<img src="{{ url_for('static', filename='imgs/step1-crop.png') }}">
+<br>
+</p>
+<h2>Step 2: straighten the tyre</h2>
+<p> 
+Now the application knows the tyre, so it has to straighten that in order to have a long rectangle with all the information (brand, size). In fact every OCR algorithm asks for words as straight as possible to read them. OpenCV has a very useful function, <a href='https://docs.opencv.org/2.4/modules/imgproc/doc/geometric_transformations.html?#logpolar'>LogPolar()</a>
+which allows to make this kind of operations. The output is something very similar to the image below and the application crops out automatically the red area (it keeps only the first 350px of height).
+<br>
+<img src="{{ url_for('static', filename='imgs/step2.png') }}">
+<br>
+</p>
+<h2>Step 3: keep the essential</h2>
+<p>This step is very important to optimize the work of the classifier. The image has to be very clean and to contain only the tyre, if possible. It depends a lot on the quality of the photo: if you have done a very good angled photo, your output will be better. Anyways, in this step too you can decide to help the application or not. You are able to draw the area that you want to keep, as showed in the image below.
+<br><img src="{{ url_for('static', filename='imgs/step3.png') }}"><br>
+If you don't draw anything, as before the app works and crop by itself the image. To decide the area, the app analyzes vertically the image and find a point where there is a big change in terms of color. It does it for 100 randomly extracted columns, then calculates the median of the 100 y-coordinates and cuts the image in that point. As you can imagine, this algorithm is very efficient to find where to cut below the tyre, and not above.
+</p>
+
 </div>
 
 <div id='some_results' style='display:none'>
