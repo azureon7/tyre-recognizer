@@ -5,7 +5,7 @@ import sys
 import traceback
 import numpy as np
 from CropImagesFunctions import cif_logpolar_manual, cif_logpolar_manual_90, cif_logpolar_auto, cif_logpolar_auto_90, cif_step1, cif_crop, image_resize, cif_preproc
-from WebScrapingFunctions import Parser
+from ScrapingFunctions import Parser
 import label_image
 import tensorflow as tf
 
