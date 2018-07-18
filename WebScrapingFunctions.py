@@ -37,10 +37,7 @@ def Parser(Marca, Param1, Param2, Param3):
         if Marca not in nome1:
             break
         img1 = righe1[1].select('img.img-serp')[0]['src']
-        try:
-            price1 = righe1[1].select('div.serp_price')[0].text.strip().split()[1]
-        except:
-            price1 = righe1[1].select('div.price')[0].text.strip().split()[1]
+        price1 = (righe1[1].select('font')[0].text)
         listone.append({'nome': nome1, 'img': img1, 'price': price1, 'url': url1})
     
     output = (listone[0], listone[-1])

@@ -9,6 +9,19 @@ function ToggleNav() {
 
 function UploadToggle() {
     document.getElementById('upload_button_hidden').click();
-    var y = document.getElementById("analize_button");
-    y.style.display = "inline";
+    document.getElementById("analize_button").style.display = "inline";
+};
+
+function Method() {
+    document.getElementById("methodology").style.display = "block";
+    document.getElementById("some_results").style.display = "none";
+    document.getElementById("method_a").setAttribute("class", "clicked");
+    document.getElementById("result_a").setAttribute("class", "not_clicked");
+};
+
+function Result() {
+    document.getElementById("methodology").style.display = "none";
+    document.getElementById("some_results").style.display = "block";
+    document.getElementById("method_a").setAttribute("class", "not_clicked");
+    document.getElementById("result_a").setAttribute("class", "clicked");
 };

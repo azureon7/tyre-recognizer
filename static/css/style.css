@@ -61,6 +61,53 @@ div.content p, div.content li{
     border: 0
 }
 
+ul.horiz_menu, ul.horiz_menu li {
+   margin:0;
+   padding: 0;
+   text-indent: 0;
+   overflow: hidden
+}
+
+ul.horiz_menu li {
+    display: inline;
+    padding-right: 20px
+}
+
+ul.horiz_menu li div {
+    display: inline-block;
+    width: 160px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 15px;
+    text-align: center
+}
+
+.clicked{
+    background-color: white;
+}
+
+.not_clicked{
+    background-color: #bcbcbc;
+}
+
+ul.horiz_menu li div#method_a:hover, ul.horiz_menu li div#result_a:hover{
+    background: white;
+    -webkit-transition: background 0.3s ease-out;  
+    -moz-transition: background 0.3s ease-out;  
+    -o-transition: background 0.3s ease-out;  
+    transition: background 0.3s ease-out; 
+}
+
+ul.horiz_menu li a {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 17px;
+    display: block;
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+}
+
 #circle_nav {
   width:260px;
   height:260px;
