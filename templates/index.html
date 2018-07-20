@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>TR - Homepage</title>
+  <link rel="icon" sizes="16x16" type="image/png" href="{{ url_for('static', filename='imgs/icon.png') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
   <script src="{{ url_for('static', filename='js/togglemenu.js') }}"></script>
 </head>
@@ -45,10 +46,10 @@
 <p>
 The code was written entirely with Python; in this project I used techniques, algorithms and functions that will be explained shortly below and more in detail in the <a href="{{ url_for('method')}}">Method section</a>. For simplicity, I considered in the project only 4 brands: Bridgestone, Continental, Michelin and Pirelli.
 <ul>
-<li>At the beginning the application reads the image and looks for circles, in order to find the tyre's center. Then, it straightens the tyre into a rectangle. To make this, I used <a href='https://opencv.org/'>OpenCV</a> functions;</li>
+<li>At the beginning the application reads the image and looks for circles, in order to find the tyre's center. Then, it straightens the tyre into a rectangle. To make this, I used <a href='https://opencv.org/' target='_blank'>OpenCV</a> functions;</li>
 <li>In order to establish the brand name, the straighted tyre is given as input to a neural network classifier;</li>
 <li>After that, I found the size with the help of the Google OCR;</li>
-<li>Finally, with scraping-techniques I got informations from the site <a href='https://www.gommadiretto.it/'>GommaDiretto.it</a> about the cheapest and the most expensive tyres with the features found before.</li>
+<li>Finally, with scraping-techniques I got informations from the site <a href='https://www.gommadiretto.it/' target='_blank'>GommaDiretto.it</a> about the cheapest and the most expensive tyres with the features found before.</li>
 </ul>
 </p>
 <h2>To start and to try the app, click on the TR logo on the left!</h2>

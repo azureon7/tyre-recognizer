@@ -128,18 +128,18 @@ def pirelli():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    #read image file string data
-    #file = request.files['image']
-    filestr = request.files['image'].read()
-    app.config['image_name'] = request.files['image'].filename
-    value = request.form.getlist('enabledownload')
-    if value:
-        app.config['DOWNLOAD'] = True
-    #convert string data to numpy array
-    npimg = np.fromstring(filestr, np.uint8)
-    # convert numpy array to image
-    img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
     try:
+        #read image file string data
+        #file = request.files['image']
+        filestr = request.files['image'].read()
+        app.config['image_name'] = request.files['image'].filename
+        value = request.form.getlist('enabledownload')
+        if value:
+            app.config['DOWNLOAD'] = True
+        #convert string data to numpy array
+        npimg = np.fromstring(filestr, np.uint8)
+        # convert numpy array to image
+        img = cv2.imdecode(npimg, cv2.IMREAD_UNCHANGED)
         img_small = image_resize(img.copy(), width=const0)
         filename='step0.jpg'
         filename_preview='step0_preview.jpg'
@@ -149,7 +149,8 @@ def upload_file():
         cv2.imwrite(f2, img_small)
         return redirect(url_for('uploaded_file', filename=filename_preview))
     except:
-        return render_template('try.html', enabledl=False )
+        app.config['OCR']=False
+        return render_template('try.html', enabledl=True, preview = True, OCR=False)
 
     
 @app.route('/crop_step1', methods=["GET", "POST"])
@@ -306,18 +307,23 @@ def return_file_90():
 
 @app.route('/scraping', methods=["GET", "POST"])
 def scraping_():
-    Marca = request.form['marchio']
-    p1 = request.form['param1']
-    p2 = request.form['param2']
-    p3 = request.form['param3']
     
-    scraping_results = Parser(Marca, p1, p2, p3)
-    
-    return render_template('try.html', init=False, crop1 = False, crop2=False, scrap_area=True, OCR=False,\
-                           nome1=scraping_results[0]['nome'], url1=scraping_results[0]['url'],\
-                           img1=scraping_results[0]['img'], prezzo1=scraping_results[0]['price'],\
-                           nome2=scraping_results[1]['nome'], url2=scraping_results[1]['url'],\
-                           img2=scraping_results[1]['img'], prezzo2=scraping_results[1]['price'])
+    try:
+        Marca = request.form['marchio']
+        p1 = request.form['param1'].strip()
+        p2 = request.form['param2'].strip()
+        p3 = request.form['param3'].strip()
+        
+        scraping_results = Parser(Marca, p1, p2, p3)
+        
+        return render_template('try.html', init=False, crop1 = False, crop2=False, scrap_area=True, OCR=False,\
+                               nome1=scraping_results[0]['nome'], url1=scraping_results[0]['url'],\
+                               img1=scraping_results[0]['img'], prezzo1=scraping_results[0]['price'],\
+                               nome2=scraping_results[1]['nome'], url2=scraping_results[1]['url'],\
+                               img2=scraping_results[1]['img'], prezzo2=scraping_results[1]['price'])
+                               
+    except:
+        return render_template('try.html', error2=True)
 
 
 

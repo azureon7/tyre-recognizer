@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>TR - About</title>
+  <link rel="icon" sizes="16x16" type="image/png" href="{{ url_for('static', filename='imgs/icon.png') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
   <script src="{{ url_for('static', filename='js/togglemenu.js') }}"></script>
 </head>
@@ -41,13 +42,13 @@
 </ul>
 
 <div id='methodology' style='display:block'>
-<p>In this section I explain step by step how the application works; I emphasize that the entire code is written in Python 3.6 and is hosted at <a href='https://github.com/fabiomarigo7/tyredetect'>this GitHub repository</a>.</p>
+<p>In this section I explain step by step how the application works; I emphasize that the entire code is written in Python 3.6 and is hosted at <a href='https://github.com/fabiomarigo7/tyredetect' target='_blank'>this GitHub repository</a>.</p>
 <h2>Step 1: find the circles</h2>
 <p>This first step is the most crucial: a good detection of the tyre into the image will improve the quality of all the process, included the final prediction of the brand and the Google's OCR output. To make this, you can let the application work automatically or help it drawing a rectangle on the image that will circumscribe the tyre. If the photo is well done, rectangle's sides should be tangent to the circle of the tyre, like the image below.
 <br>
 <img src="{{ url_for('static', filename='imgs/step1.png') }}">
 <br>
-If you don't draw anything, the application will analyze the image by itself. The OpenCV's function <a href='https://docs.opencv.org/3.1.0/da/d53/tutorial_py_houghcircles.html'>HoughCircles()</a> finds every circumference with a minimum radius. I expect that it will find a lot of circles into the image, so I keep only those with the center very close to the median of all centers. Then, I assume that the average of the centers of the remaining circumference will be very similar to the effective tyre's center. So, I calculate that and I crop the image with center into the average, and creating a square with side equal to the maximum diameter. 
+If you don't draw anything, the application will analyze the image by itself. The OpenCV's function <a href='https://docs.opencv.org/3.1.0/da/d53/tutorial_py_houghcircles.html' target='_blank'>HoughCircles()</a> finds every circumference with a minimum radius. I expect that it will find a lot of circles into the image, so I keep only those with the center very close to the median of all centers. Then, I assume that the average of the centers of the remaining circumference will be very similar to the effective tyre's center. So, I calculate that and I crop the image with center into the average, and creating a square with side equal to the maximum diameter. 
 In the image below, the red part is which has been cropped out.
 <br>
 <img src="{{ url_for('static', filename='imgs/step1-crop.png') }}">
@@ -55,7 +56,7 @@ In the image below, the red part is which has been cropped out.
 </p>
 <h2>Step 2: straighten the tyre</h2>
 <p> 
-Now the application knows the tyre, so it has to straighten that in order to have a long rectangle with all the information (brand, size). In fact every OCR algorithm asks for words as straight as possible to read them. OpenCV has a very useful function, <a href='https://docs.opencv.org/2.4/modules/imgproc/doc/geometric_transformations.html?#logpolar'>LogPolar()</a>
+Now the application knows the tyre, so it has to straighten that in order to have a long rectangle with all the information (brand, size). In fact every OCR algorithm asks for words as straight as possible to read them. OpenCV has a very useful function, <a href='https://docs.opencv.org/2.4/modules/imgproc/doc/geometric_transformations.html?#logpolar' target='_blank'>LogPolar()</a>
 which allows to make this kind of operations. The output is something very similar to the image below and the application crops out automatically the red area (it keeps only the first 350px of height).
 <br>
 <img src="{{ url_for('static', filename='imgs/step2.png') }}">
@@ -70,7 +71,62 @@ If you don't draw anything, as before the app works and crop by itself the image
 </div>
 
 <div id='some_results' style='display:none'>
-<p>SOME RESULTSSSS</p>
+<p>My goal was to predict the brand and to read the tyre-size; so, I implemented a <a href='https://en.wikipedia.org/wiki/Convolutional_neural_network'>Convolutional Neural Network</a>, based on Inception-v3 (a reference <a href='https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Szegedy_Rethinking_the_Inception_CVPR_2016_paper.pdf' target='_blank'>here</a>), and I tested the <a href='https://cloud.google.com/vision/' target='_blank'>Google OCR</a>.</p>
+<h2>Training and test sets</h2>
+<p>To build the model I took and preprocessed some training and test pictures. More in detail, the dataset for each brand is composed by:</p>
+<ul>
+<li>Bridgestone: 114 training images, 38 test images;</li>
+<li>Continental: 336 training images, 38 test images;</li>
+<li>Michelin: 377 training images, 38 test images;</li>
+<li>Bridgestone: 182 training images, 38 test images.</li>
+</ul>
+<p>This dataset is available <a href='https://drive.google.com/open?id=1jqUTOSKcKRZKKj7FE-C4Na-GkXWfPTFu' target='_blank'>here</a> and free to download. Of course the dataset and the classifier are work in progress prototypes: we need more training photos to build a more accurate predictor with much more training experience.</p>
+<h2>Performances</h2>
+<p>The classifier obtained good values of accuracy. Training accuracy is 95% and a preliminary test on 80 photos obtained <b>83.7%</b> of accuracy. A more detailed test based on 72 images produced the following confusion matrix:</p>
+
+<table class='cmatrix' cellspacing='0'>
+<tbody>
+<tr>
+<td id='excluded' ></td><td ></td>
+<td colspan='4' class='left'><b>Predicted class</b></td>
+</tr>
+<tr>
+<td id='excluded'></td>
+<td class='left' id='column'>N = 72</td><td id='column'><i>Bridgestone</i></td><td id='column'><i>Continental</i></td><td id='column'><i>Michelin</i></td><td id='column'><i>Pirelli</i></td>
+</tr>
+<tr>
+<td rowspan='4' class='rotate' id='excluded'><div>
+<b>Actual class</b>
+</div></td><td><i>Bridgestone</i></td><td>15</td><td>0</td><td>0</td><td>3</td></tr>
+<tr><td><i>Continental</i></td><td>3</td><td>15</td><td>0</td><td>0</td></tr>
+<tr><td><i>Michelin</i></td><td>0</td><td>2</td><td>14</td><td>2</td></tr>
+<tr><td><i>Pirelli</i></td><td>0</td><td>2</td><td>0</td><td>16</td></tr>
+</tbody>
+</table>
+
+<p>With an accuracy equal to <b>83.3%</b> this test confirms the preliminary test and states that the classifier has nice performances. 
+</p>
+
+<h2>Google OCR</h2>
+
+<p>The Google Cloud Vision works very well on highly resolution images, especially when the preprocessing has been done with preciseness. Some examples of output produced by this OCR are exposed below.</p>
+
+<div id='ocr_text'>
+<p> 
+ELIN\nOutro\nCNCRGY SAVER\nU19\nR14 82T\n <span>175/65 R14</span>\nTEMPERATURE A\nSIDEWALL PLY\n1 POLYESTER\n0211418\n20212502 S2 WR2\nבנ ה\n-\nהובר\nה הן ההוגה בחוות\n|la-S IN\nPOLAND\nאת ההווווסון הבנקודה נווה\nPOLAND\n175/65\nENA 2 YF\nנוי:33\\מוה/הוד סנפו-4910\nWARNING:\nVEHICLE\nFOLLOW OTINER MANUAL OR TIRE PLACARD\nTIRE FAILURE DUE TO UNDERNFLATONOVERLOADIND\nDHLY SPECIALLY TRAINED PERSON EHDULD MOUNT TIRE\nIlm THE SAME VEHICLE HIND DIFFERENT TIRE SRL ON THE SWE ARE\n
+</p>
+<p> 
+US\nREADWEAR 250\nTRASTOS) A TEMPERATURE\nA\nNEGO)\nCOMPACT BOON\n <span>205/55 R16</span> 91W\nP <span>205/55 R 16 </span>\nSTANDARD LOAD\nRADIAL\nRO286501\n6230988-se a\n)A05524\nDOT 93 BK N528 1716\n
+</p>
+<p> 
+TREADWEAR\nTRACTION\n『ニンニはすリビ\nT\nA\nCERIOUS\nV AINING\nHY KAY ASTRO\nAGC 52WP2\nWARNA\nTUBELESS RADIAL\nΠΟΙΑ) 2\nTOTAJZ <span>225/45R17</span> 97029\nFAURE DUE TO UNDERNATION/OVERLOADING\nEXPLOSIOR OTHM\nFOLLOW OWNER'S MANUAL OR\nASSIXOLY DUE 10 IMPROPIL MOUNTING\nREPLACARDIR VETLOLE\nL ATE TO FFOOERDED PRESSURE\nRIVER EXOLED 40 Pst (2751) TO SEAT BEADS\nGRY SPECIALLY TRAINED PERSONS SHOULD MOUNT TRES.\nMOUNT ONLY ON 17 INCH DIAMETER RIMS\nASTA TULADS\n63103\n63103\nMAOS IN POLANO\nMADE IN POLAND\n20H8 R2Y 261\nLA LOLO 61591953 15)\nOUTSIDE\n    
+</p>
+<p> 
+<span>185 50 R16</span>\n.\nDOT CNEC DOAK\n2316\n3E SWE2\n <span>185/50 R 16</span> 8\nLOUILT ONLY ON LODE 15 DIAMETER R\nTUBELESS\nINFLATION PRESSURE\nLOAD 232 KG 11019 LSI\nS\nOUS INTURY MAY RESULT FRONTMOUNT ONLY 0 COOL 15 DIT 2115 ONLY 316LY 2015350500 H\nCONTINENTAL\nLates.com\n    
+</p>
+</div>
+
+<p>As you can see, the OCR is able to catch the tyre-size; often the size is written two times, so there is more probability to read it.
 </div>  
   
 </div>

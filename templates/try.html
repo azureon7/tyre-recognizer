@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>TR - Try</title>
+  <link rel="icon" sizes="16x16" type="image/png" href="{{ url_for('static', filename='imgs/icon.png') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery.Jcrop.css') }}">
   <script src="{{ url_for('static', filename='js/togglemenu.js') }}"></script>
@@ -54,6 +55,7 @@
 </table>
 <br>
 <h2>Upload</h2>
+<p>I recommend the use of <a href='https://it.wikipedia.org/wiki/High_dynamic_range_imaging' target='_blank'>High dynamic range imaging</a> (HDR) to improve the quality of the picture and to maximize the contrast of the words engraved on the tyre. </p>
 <table>
     <tr>
     <td>
@@ -279,7 +281,7 @@
 <!-- ------------- SCRAPING ------------- -->
 
 {% if scrap_area %}
-<h2>Last step: tyre prices from <a href='https://www.gommadiretto.it/'>GommaDiretto.it</a></h2>
+<h2>Last step: tyre prices from <a href='https://www.gommadiretto.it/' target='_blank'>GommaDiretto.it</a></h2>
 <p>You can check below the cheapest and the most expensive tyres with brand and size found in the previous steps.</p>
 <table class='scrap_results' cellspacing='0'>
 <tr>
@@ -299,6 +301,11 @@
 </form>
 {% endif %}
 
+{% if error2 %}
+<h2>Last step: tyre prices from <a href='https://www.gommadiretto.it/' target='_blank'>GommaDiretto.it</a></h2>
+<p>Doh! Unfortunately, the application encountered an error during scraping process. 😣</p>
+<p>Try again and put valid values into the boxes. Anyways, you can find <a href='https://www.gommadiretto.it/' target='_blank'>here</a> your tyre.</p>
+{% endif %}
 </div>
 </div>
 
