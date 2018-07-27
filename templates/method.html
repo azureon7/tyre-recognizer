@@ -78,7 +78,7 @@ If you don't draw anything, as before the app works and crop by itself the image
 <li>Bridgestone: 114 training images, 38 test images;</li>
 <li>Continental: 336 training images, 38 test images;</li>
 <li>Michelin: 377 training images, 38 test images;</li>
-<li>Bridgestone: 182 training images, 38 test images.</li>
+<li>Pirelli: 182 training images, 38 test images.</li>
 </ul>
 <p>This dataset is available <a href='https://drive.google.com/open?id=1jqUTOSKcKRZKKj7FE-C4Na-GkXWfPTFu' target='_blank'>here</a> and free to download. Of course the dataset and the classifier are work in progress prototypes: we need more training photos to build a more accurate predictor with much more training experience.</p>
 <h2>Performances</h2>
@@ -126,7 +126,11 @@ TREADWEAR\nTRACTION\n『ニンニはすリビ\nT\nA\nCERIOUS\nV AINING\nHY KAY A
 </p>
 </div>
 
-<p>As you can see, the OCR is able to catch the tyre-size; often the size is written two times, so there is more probability to read it.
+<p>As you can see, the OCR is able to catch the tyre-size; often the size is written two times, so there is more probability to read it.</p>
+<p>After that, you can extract the size from the string, for example with a regular expression (<a href='https://en.wikipedia.org/wiki/Regular_expression'>regex</a>):
+<div id='ocr_text'>
+<p><span>r'(\d\d\d)[/|\s]*(\d\d)[/|\s]*(R|ZR)[/|\s]*(\d\d)'</span></p>
+</div>  
 </div>  
   
 </div>
