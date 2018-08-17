@@ -1,5 +1,4 @@
-# TYRE RECOGNIZER (TR) - HEROKU APP
-----
+# TR - HEROKU APP - CAPSTONE PROJECT
 
 ## Overview
 
