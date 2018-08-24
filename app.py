@@ -8,6 +8,7 @@ from CropImagesFunctions import cif_logpolar_manual, cif_logpolar_manual_90, cif
 from ScrapingFunctions import Parser
 import label_image
 import tensorflow as tf
+from time import sleep
 
 app = Flask(__name__)
 
@@ -155,6 +156,7 @@ def upload_file():
     
 @app.route('/crop_step1', methods=["GET", "POST"])
 def crop_step1():
+    
     img_raw = cv2.imread(os.path.join(app.config['UPLOAD_FOLDER'], 'step0.jpg'))
     const2 = img_raw.shape[1]*1.0 / const0
     #------------------
@@ -176,9 +178,22 @@ def crop_step1():
         img_90 = cif_logpolar_manual_90(img_raw)
     # procedura automatica
     else:
-        img_raw = cif_step1(img_raw)
-        img = cif_logpolar_auto(img_raw)
-        img_90 = cif_logpolar_auto_90(img_raw)
+    
+        if app.config['OCR']==False:
+            img_raw = cif_step1(img_raw)
+            img = cif_logpolar_auto(img_raw)
+            img_90 = cif_logpolar_auto_90(img_raw)
+            
+        # heroku ha poca memoria quindi il primo step per le immagini di anteprima
+        # non lo faccio eseguire. ho già salvato i risultati nella cartella static
+        else:
+
+            sleep(3)
+            print('manual')
+            img = cv2.imread('static/imgs/step1/'+ app.config['OCR']+'_step1.jpg')
+            img_small = cv2.imread('static/imgs/step1/'+ app.config['OCR']+'_step1_preview.jpg')
+            img_90 = cv2.imread('static/imgs/step1/'+ app.config['OCR']+'_step1_90.jpg')
+
     #------------------    
     # preprocessing
     img = cif_preproc(img)
@@ -192,7 +207,7 @@ def crop_step1():
     cv2.imwrite(f1, img)
     cv2.imwrite(f2, img_small)
     cv2.imwrite(f1_90, img_90)
-    #------------------   
+    #------------------  
     return redirect(url_for('show_crop1', filename='step1_preview.jpg'))
 
 @app.route('/show_crop1/<filename>')
